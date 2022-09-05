@@ -1,9 +1,27 @@
-"""
-$377. Combination Sum IV
+#1 Note that different sequences are counted as same combinations.
+class Solution:
+    def combinationSum4(self, nums, target):
+        nums.sort()
+        def combinationSum(max_idx, target):
+            if max_idx == 0:
+                return 1 if target % nums[0] == 0 else 0
+            count = 0
+            while target >= 0:
+                count += combinationSum(max_idx-1, target)
+                target = target - nums[max_idx]
+            return count
+        
+        res = combinationSum(len(nums)-1, target)
+        return res
+    
+Sol = Solution()
+nums = [1, 2, 3]
+target = 4
+res = Sol.combinationSum4(nums, target)
+print(res)
 
-Dynamic Program
-"""
 
+#2 Note that different sequences are counted as different combinations.
 class Solution:
     def combinationSum4(self, nums, target):
         if not nums:
@@ -30,9 +48,3 @@ class Solution:
             counts += val
         dps[target] = counts
         return counts
-
-
-sol = Solution()
-nums = [4, 2, 1]
-target = 32
-print(sol.combinationSum4(nums, target))
